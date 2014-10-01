@@ -29,8 +29,8 @@ elasticsearch_script_disable_dynamic: "true"
 elasticsearch_plugin_aws_version: 2.1.1
 elasticsearch_plugin_aws_ec2_groups: Elasticsearch
 elasticsearch_plugin_aws_ec2_ping_timeout: 5s
-elasticsearch_plugin_aws_access_key: AKIAIWPFDPUIMH5PSC6A
-elasticsearch_plugin_aws_secret_key: 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
+elasticsearch_plugin_aws_access_key: AKIAJ3AFH7537LILCBEQ
+elasticsearch_plugin_aws_secret_key: 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
 
 elasticsearch_misc_auto_create_index: "true"
 elasticsearch_misc_query_bool_max_clause_count: 4096
