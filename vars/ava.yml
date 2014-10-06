@@ -2,7 +2,7 @@
 # Elasticsearch Ansible Sample Variables
 
 elasticsearch_version: 1.1.1
-elasticsearch_heap_size: 2g
+elasticsearch_heap_size: 4g
 elasticsearch_max_open_files: 65535
 elasticsearch_max_locked_memory: unlimited
 elasticsearch_timezone: "Etc/UTC"
