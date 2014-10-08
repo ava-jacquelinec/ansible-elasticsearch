@@ -113,9 +113,13 @@
   notify: restart elasticsearch
 
 - name: upload custom nginx conf
-  copy: src=default.nginx dest=/etc/nginx/sites-available/default force=yes owner=root group=root mode=0644
+  copy: src=default.nginx dest=/etc/nginx/sites-available/default/ force=yes owner=root group=root mode=0644
   notify: restart nginx
-  tags: nginx
+
+- name: configure Elasticsearch logging
+  copy: src=logging.yml dest=/etc/elasticsearch/ force=yes owner=elasticsearch group=elasticsearch mode=0644
+  tags: loggs
+  notify: restart elasticsearch
 
 - name: Restarting Elasticsearch
   service: name=elasticsearch state=restarted
