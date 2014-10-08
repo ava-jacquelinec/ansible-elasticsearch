@@ -25,7 +25,7 @@ elasticsearch_script_disable_dynamic: "true"
 #elasticsearch_discovery_zen_ping_multicast_enabled: "false"
 #elasticsearch_discovery_zen_ping_unicast_hosts: ["127.0.0.1[9300-9400]"]
 
-# ec2 module
+# TODO ec2 module
 elasticsearch_plugin_aws_version: 2.1.1
 elasticsearch_plugin_aws_ec2_groups: Elasticsearch
 elasticsearch_plugin_aws_ec2_ping_timeout: 5s

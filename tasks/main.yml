@@ -6,25 +6,32 @@
 
 - name: Install python-software-properties
   apt: pkg=python-software-properties state=present update_cache=yes cache_valid_time={{apt_cache_valid_time}}
+  notify: restart elasticsearch
+
 - name: Update repositories
   apt_repository: repo={{ item }} state=present update_cache=yes
   with_items: elasticsearch_apt_repos
+  notify: restart elasticsearch
 
 - name: Accept Oracle license prior JDK installation
   shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections; echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections creates=/usr/lib/jvm/java-7-oracle
   when: elasticsearch_install_java
+  notify: restart elasticsearch
 
 - name: Install dependencies
   apt: pkg={{elasticsearch_apt_java_package}} state=present
   when: elasticsearch_install_java
+  notify: restart elasticsearch
 
 - name: Install dependencies
   apt: pkg={{ item }} state=present
   with_items: elasticsearch_apt_dependencies
+  notify: restart elasticsearch
 
 - name: Configuring user and group
   group: name={{ elasticsearch_group }}
 - user: name={{ elasticsearch_user }} group={{ elasticsearch_group }} createhome=no
+  notify: restart elasticsearch
 
 - shell: if [ -e /usr/share/elasticsearch/lib/elasticsearch-{{ elasticsearch_version }}.jar ]; then echo yes; else echo no; fi;
   register: version_exists
@@ -33,17 +40,23 @@
 - name: Download Elasticsearch deb
   get_url: url={{ elasticsearch_download_url }}/elasticsearch-{{ elasticsearch_version }}.deb dest=/tmp/elasticsearch-{{ elasticsearch_version }}.deb mode=0440
   when: version_exists.stdout == 'no'
+  notify: restart elasticsearch
 
 - name: Uninstalling previous version if applicable
   shell: dpkg --remove elasticsearch
   when: version_exists.stdout == 'no'
 - file: path=/usr/share/elasticsearch state=absent
   when: version_exists.stdout == 'no'
+  notify: restart elasticsearch
 
 - name: Install Elasticsearch deb
   shell: dpkg -i -E --force-confnew /tmp/elasticsearch-{{ elasticsearch_version }}.deb
   when: version_exists.stdout == 'no'
-- file: path=/usr/share/elasticsearch state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
+  notify: restart elasticsearch
+
+- name: create Elasticsearch dir
+  file: path=/usr/share/elasticsearch state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
+  notify: restart elasticsearch
 
 - name: Configuring directories
   file: path={{ elasticsearch_log_dir }} state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
@@ -83,17 +96,27 @@
 - name: Install Other Generic Plugins
   include: plugins.yml
   when: (elasticsearch_plugins is defined)
+  notify: restart elasticsearch
 
 - name: Install custom JARs
   include: custom-jars.yml
   when: (elasticsearch_custom_jars is defined)
+  notify: restart elasticsearch
 
 - name: Install Marvel Plugin
   include: marvel.yml
   when: (elasticsearch_plugin_marvel_version is defined)
+  notify: restart elasticsearch
 
 - name: create symlink to auto-start Elasticsearch on server boot
   file: src=/etc/init.d/elasticsearch path=/etc/rc2.d/S90elasticsearch state=link
+  notify: restart elasticsearch
+
+- name: upload custom nginx conf
+  copy: src=default.nginx dest=/etc/nginx/sites-available/default force=yes owner=root group=root mode=0644
+  notify: restart nginx
+  tags: nginx
 
 - name: Restarting Elasticsearch
   service: name=elasticsearch state=restarted
+  # TODO - complete conversion to a handler that only restarts when necessary
