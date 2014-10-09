@@ -7,7 +7,7 @@ elasticsearch_max_open_files: 65535
 elasticsearch_max_locked_memory: unlimited
 elasticsearch_timezone: "Etc/UTC"
 elasticsearch_cluster_name: logstash
-elasticsearch_node_name: elasticsearch-ansible-node
+# see inventory/ava: elasticsearch_node_name: elasticsearch-ansible-node
 elasticsearch_node_max_local_storage_nodes: 1
 elasticsearch_index_mapper_dynamic: "true"
 elasticsearch_memory_bootstrap_mlockall: "true"
