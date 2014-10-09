@@ -112,10 +112,6 @@
   file: src=/etc/init.d/elasticsearch path=/etc/rc2.d/S90elasticsearch state=link
   notify: restart elasticsearch
 
-- name: upload custom nginx conf
-  copy: src=default.nginx dest=/etc/nginx/sites-available/default/ force=yes owner=root group=root mode=0644
-  notify: restart nginx
-
 - name: configure Elasticsearch logging
   copy: src=logging.yml dest=/etc/elasticsearch/ force=yes owner=elasticsearch group=elasticsearch mode=0644
   tags: loggs
