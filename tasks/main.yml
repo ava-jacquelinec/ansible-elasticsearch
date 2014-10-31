@@ -1,6 +1,8 @@
 ---
 # Elasticsearch Ansible Tasks
 
+# TODO mount EBS volumes on new servers
+
 - name: Configuring timezone
   shell: echo {{ elasticsearch_timezone }} > /etc/timezone; dpkg-reconfigure --frontend noninteractive tzdata
 
