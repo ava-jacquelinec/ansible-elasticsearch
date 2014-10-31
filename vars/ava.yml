@@ -28,24 +28,15 @@ elasticsearch_script_disable_dynamic: "true"
 # multicast must be disabled on AWS
 elasticsearch_discovery_zen_ping_multicast_enabled: "false"
 
-# EC2 discovery
-#elasticsearch_discovery_type: ec2
-#elasticsearch_discovery_zen_minimum_master_nodes: 2
-#elasticsearch_plugin_aws_version: 2.1.1
-#elasticsearch_plugin_aws_ec2_groups: Elasticsearch
-#elasticsearch_plugin_aws_ec2_ping_timeout: 8s
-#elasticsearch_transport_tcp_connect_timeout: 8s
-#elasticsearch_plugin_aws_access_key: AKIAIACZHWN6S7JYDSBA
-#elasticsearch_plugin_aws_secret_key: 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
-
 # zen must use unicast on AWS
 elasticsearch_discovery_zen_minimum_master_nodes: 2
+elasticsearch_discovery_zen_ping_unicast_hosts: ["127.0.0.1[9300]","54.177.94.154[9300]","54.176.159.62[9300]"]
 elasticsearch_discovery_zen_ping_timeout: 8s
-elasticsearch_transport_tcp_connect_timeout: 8s
-elasticsearch_discovery_zen_ping_unicast_hosts: ["127.0.0.1[9300-9400]","54.176.159.62[9300-9400]","54.177.94.154[9300-9400]"]
+elasticsearch_discovery_zen_fd_ping_timeout: 16s
+elasticsearch_transport_tcp_connect_timeout: 16s
 
 elasticsearch_misc_auto_create_index: "true"
-elasticsearch_misc_query_bool_max_clause_count: 4096
 elasticsearch_misc_disable_delete_all_indices: "true"
+elasticsearch_misc_query_bool_max_clause_count: 4096
 
 # TODO elasticsearch_plugin_marvel_version: 1.2.1
