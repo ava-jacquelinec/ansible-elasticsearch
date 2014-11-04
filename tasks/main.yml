@@ -1,8 +1,6 @@
 ---
 # Elasticsearch Ansible Tasks
 
-# TODO mount EBS volumes on new servers
-
 - name: Configuring timezone
   shell: echo {{ elasticsearch_timezone }} > /etc/timezone; dpkg-reconfigure --frontend noninteractive tzdata
 
@@ -34,6 +32,13 @@
   group: name={{ elasticsearch_group }}
 - user: name={{ elasticsearch_user }} group={{ elasticsearch_group }} createhome=no
   notify: restart elasticsearch
+
+- name: ebs mount point
+  file: path=/data state=directory owner=elasticsearch group=elasticsearch mode=0755
+
+# TODO doesn't work
+- name: mount ebs volume
+  mount: name=/data src=/dev/xvdf fstype=ext4 opts="defaults,nofail" state=mounted
 
 - shell: if [ -e /usr/share/elasticsearch/lib/elasticsearch-{{ elasticsearch_version }}.jar ]; then echo yes; else echo no; fi;
   register: version_exists
