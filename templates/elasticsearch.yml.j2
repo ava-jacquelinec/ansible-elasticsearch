@@ -542,3 +542,17 @@ action.disable_delete_all_indices: {{ elasticsearch_misc_disable_delete_all_indi
 {{ threadPoolSetting }}
 {% endfor %}
 {% endif %}
+
+################################### Conversica #####################################
+
+{% if elasticsearch_threadpool_index_queue_size is defined %}
+threadpool.index.queue.size: {{ elasticsearch_threadpool_index_queue_size }}
+{% endif %}
+
+{% if elasticsearch_indices_fielddata_cache_size is defined %}
+indices.fielddata.cache.size: {{ elasticsearch_indices_fielddata_cache_size }}
+{% endif %}
+
+{% if elasticsearch_indices_breaker_fielddata_limit is defined %}
+indices.breaker.fielddata.limit: {{ elasticsearch_indices_breaker_fielddata_limit }}
+{% endif %}
