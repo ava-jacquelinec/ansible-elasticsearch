@@ -4,7 +4,7 @@
 elasticsearch_version: 1.1.1
 
 # custom RAM settings
-elasticsearch_heap_size: 2g
+elasticsearch_heap_size: 3500m
 elasticsearch_indices_fielddata_cache_size: 50%
 elasticsearch_indices_breaker_fielddata_limit: 50%
 elasticsearch_java_opts: "-XX:-UseSuperWord"
