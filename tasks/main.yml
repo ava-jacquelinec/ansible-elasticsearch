@@ -37,8 +37,8 @@
   file: path=/data state=directory owner=elasticsearch group=elasticsearch mode=0755
 
 # TODO doesn't work
-- name: mount ebs volume
-  mount: name=/data src=/dev/xvdf fstype=ext4 opts="defaults,nofail" state=mounted
+# - name: mount ebs volume
+#  mount: name=/data src=/dev/xvdf fstype=ext4 opts="defaults,nofail" state=mounted
 
 - shell: if [ -e /usr/share/elasticsearch/lib/elasticsearch-{{ elasticsearch_version }}.jar ]; then echo yes; else echo no; fi;
   register: version_exists
