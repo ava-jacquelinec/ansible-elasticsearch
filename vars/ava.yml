@@ -31,7 +31,7 @@ elasticsearch_discovery_zen_ping_multicast_enabled: "false"
 
 # zen must use unicast on AWS
 elasticsearch_discovery_zen_minimum_master_nodes: 2
-elasticsearch_discovery_zen_ping_unicast_hosts: ["10.10.7.21[9300-9301]","10.10.66.50[9300-9301]","10.10.144.195[9300-9301]"]
+elasticsearch_discovery_zen_ping_unicast_hosts: ["10.10.7.21[9300-9301]","10.10.66.50[9300-9301]","10.10.144.148[9300-9301]"]
 elasticsearch_discovery_zen_ping_timeout: 32s
 elasticsearch_discovery_zen_fd_ping_timeout: 16s
 elasticsearch_transport_tcp_connect_timeout: 16s
